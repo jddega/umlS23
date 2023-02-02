@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'uname -a'
+                echo "Msit 330 Lab"
             }
         }
     }
