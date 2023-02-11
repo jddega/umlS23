@@ -9,7 +9,7 @@ podTemplate(containers: [
 
   volumes: [
     persistentVolumeClaim(
-      mountPath: '/root/.m2/repository',
+      mountPath: '/var/jenkins_home',
       claimName: 'jenkins-pv-claim',
       readOnly: false
     )
