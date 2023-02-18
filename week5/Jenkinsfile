@@ -40,7 +40,7 @@ podTemplate(containers: [
                 pwd
                 cd Chapter08/sample1
                   ./gradlew checkstyleTest
-                  ./gradlew jacococheckstyleReport '''
+                  ./gradlew Checkstyle '''
                   
               } catch (Exception E) {
                 echo 'Failure detected'
