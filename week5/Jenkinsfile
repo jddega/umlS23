@@ -39,7 +39,7 @@ podTemplate(containers: [
                 sh '''
                 pwd
                 cd Chapter08/sample1
-                  ./gradlew checkstyle
+                  ./gradlew checkstyleTest
                   ./gradlew jacococheckstyleReport '''
                   
               } catch (Exception E) {
