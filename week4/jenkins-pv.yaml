@@ -6,6 +6,9 @@ metadata:
     type: local
 spec:
   storageClassName: hostpath
+  claimRef:
+    name: jenkins-pv-claim
+    namespace: devops-tools
   capacity:
     storage: 3Gi
   accessModes:
@@ -13,5 +16,6 @@ spec:
   hostPath:
     path: /tmp
   persistentVolumeReclaimPolicy: Retain
+
 
 
