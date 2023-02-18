@@ -19,7 +19,7 @@ podTemplate(containers: [
             git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
             sh '''
             cd Chapter08 / sample1
-            chmod + x gradlew
+            chmod +x gradlew
               ./gradlew test '''
           }
 
@@ -34,7 +34,7 @@ podTemplate(containers: [
               echo 'Failure detected'
             }
 
-            stage("Code style") {
+            stage("Code checkstyle") {
               try {
                 sh '''
                 pwd
