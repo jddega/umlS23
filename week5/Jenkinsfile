@@ -18,7 +18,7 @@ podTemplate(containers: [
             // https://www.jenkins.io/doc/pipeline/steps/git/
             git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
             sh '''
-            cd Chapter08 / sample1
+            cd Chapter08/sample1
             chmod +x gradlew
               ./gradlew test '''
           }
@@ -38,7 +38,7 @@ podTemplate(containers: [
               try {
                 sh '''
                 pwd
-                cd Chapter08 / sample1
+                cd Chapter08/sample1
                   ./gradlew checkstyle
                   ./gradlew jacococheckstyleReport '''
                   
