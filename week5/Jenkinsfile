@@ -16,7 +16,7 @@ podTemplate(containers: [
                 stage('Build a gradle project') {
                     // from the git plugin
                     // https://www.jenkins.io/doc/pipeline/steps/git/
-                    git 'https://github.com/dlambrig/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+                    git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
                     sh '''
                     cd Chapter08/sample1
                     chmod +x gradlew
