@@ -46,12 +46,12 @@ podTemplate(containers: [
                 echo 'Failure detected'
               }
                 
-                stage("Code constname") {
+                stage("Code constantName") {
               try {
                 sh '''
                 pwd
                 cd Chapter08/sample1
-                  ./gradlew constname
+                  ./gradlew checkstyle
                   ./gradlew jacocoTestReport '''
                   
               } catch (Exception E) {
@@ -78,7 +78,7 @@ podTemplate(containers: [
               publishHTML(target: [
                 reportDir: 'Chapter08/sample1/build/reports/checkstyle',
                 reportFiles: 'main.html',
-                reportName: "jacoco constname"
+                reportName: "jacoco constantName"
               ])
             }
           }
