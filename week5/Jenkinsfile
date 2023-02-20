@@ -50,7 +50,7 @@ podTemplate(containers: [
               try {
                 sh '''
                 pwd
-                cd Chapter08/sample1
+                cd Chapter08/sample1/config/checkstyle
                   ./gradlew check
                   ./gradlew jacocoTestReport '''
                   
