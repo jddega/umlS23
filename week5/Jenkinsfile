@@ -46,17 +46,7 @@ podTemplate(containers: [
                 echo 'Failure detected'
               }
                 
-                stage("Code constantName") {
-              try {
-                sh '''
-                pwd
-                cd Chapter08/sample1/config/checkstyle
-                  ./gradlew check
-                  ./gradlew jacocoTestReport '''
-                  
-              } catch (Exception E) {
-                echo 'Failure detected'
-              }
+              
 
               // from the HTML publisher plugin
               // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
@@ -72,16 +62,6 @@ podTemplate(containers: [
                 reportFiles: 'main.html',
                 reportName: "jacoco Checkstyle"
               ])
-               
-               // from the HTML publisher plugin
-              // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
-              publishHTML(target: [
-                reportDir: 'Chapter08/sample1/build/reports/checkstyle',
-                reportFiles: 'main.html',
-                reportName: "jacoco constantName"
-              ])
-            }
-          }
         }
       }
     }
