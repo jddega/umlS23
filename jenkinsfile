@@ -1,0 +1,31 @@
+podTemplate(containers: [
+    containerTemplate(
+      name: 'maven',
+      image: 'maven:3.8.1-jdk-8',
+      command: 'sleep',
+      args: '30d'
+    )
+  ],
+
+  volumes: [
+    persistentVolumeClaim(
+      mountPath: '/var/jenkins_home',
+      claimName: 'jenkins-pv-claim',
+      readOnly: false
+    )
+  ])
+
+{
+  node(POD_LABEL) {
+    stage('Get a Maven project') {
+      git 'https://github.com/dlambrig/simple-java-maven-app.git'
+      container('maven') {
+        stage('Build a Maven project') {
+          sh 'mvn -B -ntp clean package -DskipTests'
+          
+
+        }
+      }
+    }
+  }
+}
