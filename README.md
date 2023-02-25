@@ -1,8 +1,1 @@
-# umlS23
-developer ops sping23 course
-<<<<<<< HEAD
-- 1 step 1 - integrating GitHub into Jenkins
-here is that
-=======
-v17
->>>>>>> upstream/main
+cannot figure it out so I am out....
