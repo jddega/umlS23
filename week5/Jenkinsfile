@@ -24,12 +24,11 @@ podTemplate(containers: [
 					// from the git plugin
 					// https://www.jenkins.io/doc/pipeline/steps/git/
 					git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-					sh ''
-					'
-					cd Chapter08 / sample1
+					sh '''
+					cd Chapter08/sample1
 					chmod + x gradlew
-						. / gradlew test ''
-					'
+						./gradlew test '''
+					
 				}
 
 				stage("Code coverage") {
@@ -38,13 +37,12 @@ podTemplate(containers: [
 					}
 
 					try {
-						sh ''
-						'
+						sh '''
 						pwd
-						cd Chapter08 / sample1
-							. / gradlew jacocoTestCoverageVerification
-							. / gradlew jacocoTestReport ''
-						'
+						cd Chapter08/sample1
+							./gradlew jacocoTestCoverageVerification
+							./gradlew jacocoTestReport '''
+						
 					} catch (Exception E) {
 						echo 'Failure detected'
 					}
@@ -55,13 +53,12 @@ podTemplate(containers: [
 						}
 
 						try {
-							sh ''
-							'
+							sh '''
 							pwd
-							cd Chapter08 / sample1
-								. / gradlew checkstyleMain
-								. / gradlew jacocoTestReport ''
-							'
+							cd Chapter08/sample1
+								./gradlew checkstyleMain
+								./gradlew jacocoTestReport '''
+							
 
 						} catch (Exception E) {
 							echo 'Failure detected'
