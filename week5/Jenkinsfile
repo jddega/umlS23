@@ -75,5 +75,4 @@ podTemplate(containers: [
 				}
 			}
 		}
-	}
 }
