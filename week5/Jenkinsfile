@@ -10,16 +10,9 @@ podTemplate(containers: [
 ]) {
 
 	node(POD_LABEL) {
-		stage('Run pipeline against a gradle project') {
-			when {
-				branch "testing"
-			}
+		stage('Run pipeline against a gradle project') 
 			// "container" Selects a container of the agent pod so that all shell steps are executed in that container.
-			container('gradle') {
-				when {
-					branch "testing"
-				}
-
+			container('gradle') 
 				stage('Build a gradle project') {
 					// from the git plugin
 					// https://www.jenkins.io/doc/pipeline/steps/git/
