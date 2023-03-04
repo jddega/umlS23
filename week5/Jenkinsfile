@@ -14,8 +14,6 @@ podTemplate(containers: [
         // "container" Selects a container of the agent pod so that all shell steps are executed in that container.
         container('gradle') {
           stage('Build a gradle project') {
-		  if (env.BRANCH_NAME == "feature") {
-			echo "I am the ${env.CHANGE_NAME} branch"
             // from the git plugin
             // https://www.jenkins.io/doc/pipeline/steps/git/
             git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
@@ -23,7 +21,6 @@ podTemplate(containers: [
             cd Chapter08/sample1
             chmod +x gradlew
               ./gradlew test '''
-           }
 	  }
           stage("Code coverage") {
 		  if (env.BRANCH_NAME == "testing") {
