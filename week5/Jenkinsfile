@@ -24,9 +24,7 @@ podTemplate(containers: [
           }
 
           stage("Code coverage") {
-		  when {
-				branch "main"
-			}
+		  
             try {
               sh '''
               pwd
@@ -38,9 +36,7 @@ podTemplate(containers: [
             }
 
             stage("Code checkstyle") {
-		     when {
-				branch "testing"
-			}
+		    
               try {
                 sh '''
                 pwd
