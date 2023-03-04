@@ -65,7 +65,8 @@ podTemplate(containers: [
                 reportFiles: 'main.html',
                 reportName: "jacoco Checkstyle"
               ])
-            }
+	     }
+	    }
           }
         }
       }
