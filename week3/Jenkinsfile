@@ -63,9 +63,6 @@ podTemplate(yaml: '''
       }
     }
     stage("Code coverage") {
-	    when {
-		    env.BRANCH_NAME == 'main'
-	    }
         git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
 		  
         try {
@@ -80,9 +77,6 @@ podTemplate(yaml: '''
         }
 
     stage("Code checkstyle") {
-	    when {
-		    env.BRANCH_NAME != 'main'
-	    }
         git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
       try {
         sh '''
