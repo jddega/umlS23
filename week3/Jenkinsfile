@@ -49,7 +49,6 @@ podTemplate(yaml: '''
         }
       }
     }
-
     stage('Build Java Image') {
       container('kaniko') {
         stage('Build a gradle project') {
@@ -91,7 +90,6 @@ podTemplate(yaml: '''
       } catch (Exception E) {
         echo 'Failure detected'
       }
-
           // from the HTML publisher plugin
           // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
           publishHTML(target: [
