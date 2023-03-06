@@ -38,136 +38,136 @@ podTemplate(yaml: '''
   node(POD_LABEL) {
     stage('Build a gradle project') {
         if (env.BRANCH_NAME == "main"){
-      git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-      container('gradle') {
-        stage('Build a gradle project') {
-          sh '''
-          cd Chapter08/sample1
-          chmod +x gradlew
-          ./gradlew build
-          mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
-          
-          '''
-        }
-      }
-    }
+	      git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+	      container('gradle') {
+		stage('Build a gradle project') {
+		  sh '''
+		  cd Chapter08/sample1
+		  chmod +x gradlew
+		  ./gradlew build
+		  mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
 
-    stage('Build Java Image') {
-      container('kaniko') {
-        stage('Build a gradle project') {
-          sh '''
-          echo 'FROM openjdk:8-jre' > Dockerfile
-          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
-          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
-          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination jddega/calculator-kaniko:1.0
-          '''
-        }
-      }
-    }
-    stage("Code coverage") {
-        //git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-		  
-        try {
-          sh '''
-          pwd
-          cd Chapter08/sample1
-            chmod +x gradlew
-            ./gradlew jacocoTestCoverageVerification
-            ./gradlew jacocoTestReport '''
-        } catch (Exception E) {
-          echo 'Failure detected'
-        }
+		  '''
+	  }
+	 }
+	}
 
-    stage("Code checkstyle") {
-       // git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-      try {
-        sh '''
-        pwd
-        cd Chapter08/sample1
-          
-          chmod +x gradlew
-          ./gradlew checkstyleMain
-          ./gradlew jacocoTestReport '''
-          
-      } catch (Exception E) {
-        echo 'Failure detected'
-      }
+	    stage('Build Java Image') {
+	      container('kaniko') {
+		stage('Build a gradle project') {
+		  sh '''
+		  echo 'FROM openjdk:8-jre' > Dockerfile
+		  echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+		  echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+		  mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+		  /kaniko/executor --context `pwd` --destination jddega/calculator-kaniko:1.0
+		  '''
+		}
+	      }
+	    }
+	    stage("Code coverage") {
+		//git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
 
-          // from the HTML publisher plugin
-          // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
-          publishHTML(target: [
-            reportDir: 'Chapter08/sample1/build/reports/tests/test',
-            reportFiles: 'index.html',
-            reportName: "JaCoCo Report"
-          ])
-        }
+		try {
+		  sh '''
+		  pwd
+		  cd Chapter08/sample1
+		    chmod +x gradlew
+		    ./gradlew jacocoTestCoverageVerification
+		    ./gradlew jacocoTestReport '''
+		} catch (Exception E) {
+		  echo 'Failure detected'
+		}
+
+	    stage("Code checkstyle") {
+	       // git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+	      try {
+		sh '''
+		pwd
+		cd Chapter08/sample1
+
+		  chmod +x gradlew
+		  ./gradlew checkstyleMain
+		  ./gradlew jacocoTestReport '''
+
+	      } catch (Exception E) {
+		echo 'Failure detected'
+	      }
+
+		  // from the HTML publisher plugin
+		  // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
+		  publishHTML(target: [
+		    reportDir: 'Chapter08/sample1/build/reports/tests/test',
+		    reportFiles: 'index.html',
+		    reportName: "JaCoCo Report"
+		  ])
+		}
         
         if (env.BRANCH_NAME == "feature"){
-      git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-      container('gradle') {
-        stage('Build a gradle project') {
-          sh '''
-          cd Chapter08/sample1
-          chmod +x gradlew
-          ./gradlew build
-          mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar ./build/libs/calculator-feature-0.0.1-SNAPSHOT.jar
-          mv ./build/libs/calculator-feature-0.0.1-SNAPSHOT.jar /mnt
-          
-          '''
-        }
-      }
-    }
+	      git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+	      container('gradle') {
+		stage('Build a gradle project') {
+		  sh '''
+		  cd Chapter08/sample1
+		  chmod +x gradlew
+		  ./gradlew build
+		  mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar ./build/libs/calculator-feature-0.0.1-SNAPSHOT.jar
+		  mv ./build/libs/calculator-feature-0.0.1-SNAPSHOT.jar /mnt
 
-    stage('Build Java Image') {
-      container('kaniko') {
-        stage('Build a gradle project') {
-          sh '''
-          echo 'FROM openjdk:8-jre' > Dockerfile
-          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
-          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
-          mv /mnt/calculator-feature-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination jddega/calculator-feature:0.1
-          '''
-        }
-      }
-    }
-    stage("Code coverage") {
-        //git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-		  
-        try {
-          sh '''
-          pwd
-          cd Chapter08/sample1
-            chmod +x gradlew
-            ./gradlew jacocoTestCoverageVerification
-            ./gradlew jacocoTestReport '''
-        } catch (Exception E) {
-          echo 'Failure detected'
-        }
+		  '''
+		}
+	      }
+	    }
 
-    stage("Code checkstyle") {
-       // git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
-      try {
-        sh '''
-        pwd
-        cd Chapter08/sample1
-          
-          chmod +x gradlew
-          ./gradlew checkstyleMain
-          ./gradlew jacocoTestReport '''
-          
-      } catch (Exception E) {
-        echo 'Failure detected'
-      }
+	    stage('Build Java Image') {
+	      container('kaniko') {
+		stage('Build a gradle project') {
+		  sh '''
+		  echo 'FROM openjdk:8-jre' > Dockerfile
+		  echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+		  echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+		  mv /mnt/calculator-feature-0.0.1-SNAPSHOT.jar .
+		  /kaniko/executor --context `pwd` --destination jddega/calculator-feature:0.1
+		  '''
+		}
+	      }
+	    }
+	    stage("Code coverage") {
+		//git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
 
-          // from the HTML publisher plugin
-          // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
-          publishHTML(target: [
-            reportDir: 'Chapter08/sample1/build/reports/tests/test',
-            reportFiles: 'index.html',
-            reportName: "JaCoCo Report"
-          ])
+		try {
+		  sh '''
+		  pwd
+		  cd Chapter08/sample1
+		    chmod +x gradlew
+		    ./gradlew jacocoTestCoverageVerification
+		    ./gradlew jacocoTestReport '''
+		} catch (Exception E) {
+		  echo 'Failure detected'
+		}
+
+	    stage("Code checkstyle") {
+	       // git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+	      try {
+		sh '''
+		pwd
+		cd Chapter08/sample1
+
+		  chmod +x gradlew
+		  ./gradlew checkstyleMain
+		  ./gradlew jacocoTestReport '''
+
+	      } catch (Exception E) {
+		echo 'Failure detected'
+	      }
+
+		  // from the HTML publisher plugin
+		  // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
+		  publishHTML(target: [
+		    reportDir: 'Chapter08/sample1/build/reports/tests/test',
+		    reportFiles: 'index.html',
+		    reportName: "JaCoCo Report"
+		  ])
          }
         }
       }
