@@ -99,7 +99,7 @@ podTemplate(yaml: '''
             reportFiles: 'index.html',
             reportName: "JaCoCo Report"
           ])
-       }
+        }
     }
   }
 }
