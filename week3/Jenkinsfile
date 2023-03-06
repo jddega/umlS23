@@ -171,6 +171,7 @@ podTemplate(yaml: '''
           ])
          }
         }
+      }
     }
   }
- }
+}
