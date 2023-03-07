@@ -13,15 +13,20 @@ podTemplate(containers: [
       stage('Run pipeline against a gradle project') {
         // "container" Selects a container of the agent pod so that all shell steps are executed in that container.
         container('gradle') {
+		git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
           stage('Build a gradle project') {
+		  if (env.BRANCH_NAME == "playground") {
+			echo "I am the ${env.CHANGE_NAME} branch" 
             // from the git plugin
             // https://www.jenkins.io/doc/pipeline/steps/git/
-            git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+          
             sh '''
             cd Chapter08/sample1
             chmod +x gradlew
               ./gradlew test '''
 	  }
+	  }
+		
           stage("Code coverage") {
 		  if (env.BRANCH_NAME == "feature") {
 			echo "I am the ${env.CHANGE_NAME} branch"  
