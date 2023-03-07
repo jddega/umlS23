@@ -23,7 +23,7 @@ podTemplate(containers: [
               ./gradlew test '''
 	  }
           stage("Code coverage") {
-		  if (env.BRANCH_NAME == "testing") {
+		  if (env.BRANCH_NAME == "feature") {
 			echo "I am the ${env.CHANGE_NAME} branch"  
             try {
               sh '''
