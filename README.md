@@ -1,7 +1,5 @@
 # umlS23
 developer ops sping23 course
-<<<<<<< HEAD
-<<<<<<< HEAD
 testing 1
 =======
 =======
