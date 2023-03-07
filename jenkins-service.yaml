@@ -5,8 +5,16 @@ metadata:
   name: jenkins
 spec:
   type: NodePort
+<<<<<<< HEAD
     ports:
     - port: 8080
       targetPort: 8080
     selector:
       app: jenkins
+=======
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: jenkins
+>>>>>>> main
