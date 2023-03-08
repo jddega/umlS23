@@ -69,6 +69,7 @@ podTemplate(yaml: '''
     container('gradle'){
         stage("Unit test") {
             echo "I am the ${env.BRANCH_NAME} branch"
+		if (env.BRANCH_NAME == 'feature'){
                try {
                     sh '''
                     pwd
@@ -80,9 +81,11 @@ podTemplate(yaml: '''
                catch (Exception E) {
                   echo 'Failure detected'
                 }
-          }
+	      }
+	     }
         stage("Code coverage") {
             echo "I am the ${env.BRANCH_NAME} branch"
+		if (env.BRANCH_NAME != 'feature') {
                 try {
                   sh '''
                   pwd
@@ -90,12 +93,15 @@ podTemplate(yaml: '''
                     chmod +x gradlew
                     ./gradlew jacocoTestCoverageVerification
                     ./gradlew jacocoTestReport '''
-                } catch (Exception E) {
+                } 
+		 catch (Exception E) {
                   echo 'Failure detected'
                 }
-    
+	     }
+	   }
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
+	   if (env.BRANCH_NAME == 'main') {
            try {
             sh '''
             pwd
@@ -107,7 +113,8 @@ podTemplate(yaml: '''
           } catch (Exception E) {
             echo 'Failure detected'
           }
-    
+	 }
+	}
               // from the HTML publisher plugin
               // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
               publishHTML(target: [
@@ -115,8 +122,7 @@ podTemplate(yaml: '''
                 reportFiles: 'index.html',
                 reportName: "JaCoCo Report"
               ])
-        }
-	 }
+            }
+         }
+      }
     }
-  }
-}
