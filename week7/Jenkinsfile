@@ -71,7 +71,7 @@ podTemplate(yaml: '''
         stage("Unit test") {
             echo "I am the ${env.BRANCH_NAME} branch"
 		if (env.BRANCH_NAME == 'feature') 
-		    steps{
+		    {
                    try {
                     sh '''
                     pwd
@@ -89,7 +89,7 @@ podTemplate(yaml: '''
         stage("Code coverage") {
             echo "I am the ${env.BRANCH_NAME} branch"
 		if (env.BRANCH_NAME != 'feature') 
-		    steps {
+		    {
                 try {
                   sh '''
                   pwd
@@ -107,7 +107,7 @@ podTemplate(yaml: '''
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
 	   if (env.BRANCH_NAME == 'feature') 
-		steps {
+		{
            try {
             sh '''
             pwd
