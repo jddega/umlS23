@@ -40,7 +40,6 @@ podTemplate(yaml: '''
       git 'https://github.com/jddega/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
       container('gradle') {
         stage('Build a gradle project') {
-          echo "I am the ${env.BRANCH_NAME} branch"
           sh '''
           cd Chapter08/sample1
           chmod +x gradlew
@@ -54,7 +53,6 @@ podTemplate(yaml: '''
     stage('Build Java Image') {
       container('kaniko') {
         stage('Build a gradle project') {
-          echo "I am the ${env.BRANCH_NAME} branch"
           sh '''
           echo 'FROM openjdk:8-jre' > Dockerfile
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
