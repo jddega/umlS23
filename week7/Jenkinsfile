@@ -61,7 +61,9 @@ podTemplate(yaml: '''
           pwd
           ls -al
           find . -name *.jar
-          /kaniko/executor --context `pwd` --destination jddega/hello-kaniko:3.1.0
+	  mv ./calculator-0.0.1-SNAPSHOT.jar ./calculator-feature-0.0.1-SNAPSHOT.jar
+	  ls -al
+          /kaniko/executor --context `pwd` --destination jddega/hello-kaniko:0.1.0
           '''
         }
       }
