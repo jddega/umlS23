@@ -70,8 +70,9 @@ podTemplate(yaml: '''
     container('gradle'){
         stage("Unit test") {
             echo "I am the ${env.BRANCH_NAME} branch"
-		if (env.BRANCH_NAME == 'main'){
-               try {
+		when {env.BRANCH_NAME == 'feature'} 
+		   steps {
+                   try {
                     sh '''
                     pwd
                     cd Chapter08/sample1
@@ -84,10 +85,11 @@ podTemplate(yaml: '''
                 echo 'Failure detected'
                 }
 	      }
-	}
+	    }
         stage("Code coverage") {
             echo "I am the ${env.BRANCH_NAME} branch"
-		if (env.BRANCH_NAME != 'main') {
+		when {env.BRANCH_NAME != 'feature'} 
+		    steps {
                 try {
                   sh '''
                   pwd
@@ -101,10 +103,11 @@ podTemplate(yaml: '''
                   echo 'Failure detected'
                 }
 	     }
-	}
+	    }
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
-	   if (env.BRANCH_NAME == 'main') {
+	   when {env.BRANCH_NAME == 'feature'} 
+		steps {
            try {
             sh '''
             pwd
