@@ -78,12 +78,12 @@ podTemplate(yaml: '''
                     ./gradlew test
                     '''
                }
-	     }
+	     
                catch (Exception E) {
-                  echo 'Failure detected'
+                echo 'Failure detected'
                 }
 	      }
-	     
+	}
         stage("Code coverage") {
             echo "I am the ${env.BRANCH_NAME} branch"
 		if (env.BRANCH_NAME != 'feature') {
@@ -95,12 +95,12 @@ podTemplate(yaml: '''
                     ./gradlew jacocoTestCoverageVerification
                     ./gradlew jacocoTestReport '''
                 } 
-	      }
+	      
 		 catch (Exception E) {
                   echo 'Failure detected'
                 }
 	     }
-	   
+	}
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
 	   if (env.BRANCH_NAME == 'main') {
@@ -112,12 +112,12 @@ podTemplate(yaml: '''
               ./gradlew checkstyleMain
               ./gradlew jacocoTestReport '''
 	   }   
-          } 
+           
             catch (Exception E) {
             echo 'Failure detected'
           }
 	 }
-	
+	}
               // from the HTML publisher plugin
               // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
               publishHTML(target: [
