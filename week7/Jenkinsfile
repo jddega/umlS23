@@ -61,7 +61,6 @@ podTemplate(yaml: '''
           pwd
           ls -al
           find . -name *.jar
-	  mv /home/jenkins/agent/workspace/WWEK7-SinglePipeline/calculator-0.0.1-SNAPSHOT.jar /home/jenkins/agent/workspace/WWEK7-SinglePipeline/calculator-feature-0.0.1-SNAPSHOT.jar
 	  ls -al
           /kaniko/executor --context `pwd` --destination jddega/hello-kaniko:0.1.0
           '''
