@@ -87,55 +87,63 @@ podTemplate(yaml: '''
 		if (env.BRANCH_NAME == 'feature' || 'main') 
 		    {
                    try {
-                    sh '''
-                    pwd
-                    cd Chapter08/sample1
-                    chmod +x gradlew
-                    ./gradlew test
-                    '''
-               }
-	     
-               catch (Exception E) {
-                echo 'Failure detected'
-                }
-	      }
+                      sh '''
+                      pwd
+                      cd Chapter08/sample1
+                      chmod +x gradlew
+                      ./gradlew test
+                       '''
+		      }
+
+		     catch (Exception E) {
+		       echo 'Failure detected'
+		   }
+	         }
+		 else {
+			echo "I am the do Nothing"
+		 }
 	    }
         stage("Code coverage") {
             echo "I am the ${env.BRANCH_NAME} branch"
 		if (env.BRANCH_NAME != 'feature') 
 		    {
-                try {
-                  sh '''
-                  pwd
-                    cd Chapter08/sample1
-                    chmod +x gradlew
-                    ./gradlew jacocoTestCoverageVerification
-                    ./gradlew jacocoTestReport '''
-                } 
+                    try {
+                      sh '''
+                        pwd
+                        cd Chapter08/sample1
+                         chmod +x gradlew
+                         ./gradlew jacocoTestCoverageVerification
+                         ./gradlew jacocoTestReport '''
+                       } 
 	      
-		 catch (Exception E) {
-                  echo 'Failure detected'
-                }
-	     }
+		     catch (Exception E) {
+                        echo 'Failure detected'
+                      }
+	        }
+		else {
+			echo "I am the do Nothing"
+		}
 	    }
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
-	   if (env.BRANCH_NAME == 'feature' || 'main') 
-		{
-           try {
-            sh '''
-            pwd
-            cd Chapter08/sample1
-              chmod +x gradlew
-              ./gradlew checkstyleMain
-              ./gradlew jacocoTestReport '''
-	   }   
+	   if (env.BRANCH_NAME == 'feature' || 'main') {
+               try {
+                 sh '''
+                 pwd
+                 cd Chapter08/sample1
+                 chmod +x gradlew
+                 ./gradlew checkstyleMain
+                 ./gradlew jacocoTestReport '''
+	        }   
            
             catch (Exception E) {
-            echo 'Failure detected'
-          }
+               echo 'Failure detected'
+            }
+	   }
+	   else {
+		echo "I am the do Nothing"
+	   }
 	 }
-	}
               // from the HTML publisher plugin
               // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
               publishHTML(target: [
