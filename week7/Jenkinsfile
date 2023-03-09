@@ -53,6 +53,7 @@ podTemplate(yaml: '''
     stage('Build Java Image') {
       container('kaniko') {
 		stage('Build a gradle project') {
+		  echo "I am the ${env.BRANCH_NAME} branch"
 		  if (env.BRANCH_NAME == 'feature'){
 		  sh '''
 		  echo 'FROM openjdk:8-jre' > Dockerfile
@@ -66,6 +67,7 @@ podTemplate(yaml: '''
 		}
 	      
 	    stage('Build a gradle project') {
+		  echo "I am the ${env.BRANCH_NAME} branch"
 		  if (env.BRANCH_NAME == 'main'){
 		  sh '''
 		  echo 'FROM openjdk:8-jre' > Dockerfile
