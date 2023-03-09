@@ -52,21 +52,33 @@ podTemplate(yaml: '''
 
     stage('Build Java Image') {
       container('kaniko') {
-        stage('Build a gradle project') {
-          sh '''
-          echo 'FROM openjdk:8-jre' > Dockerfile
-          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
-          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
-          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          pwd
-          ls -al
-          find . -name *.jar
-	  ls -al
-          /kaniko/executor --context `pwd` --destination jddega/hello-kaniko:1.0.0
-          '''
-        }
-      }
-    }
+		stage('Build a gradle project') {
+		  if (env.BRANCH_NAME == 'feature'){
+		  sh '''
+		  echo 'FROM openjdk:8-jre' > Dockerfile
+		  echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+		  echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+		  mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+		  pwd
+		  /kaniko/executor --context `pwd` --destination jddega/calculator-feature:0.1.0
+		  '''
+		  }
+		}
+	      
+	    stage('Build a gradle project') {
+		  if (env.BRANCH_NAME == 'main'){
+		  sh '''
+		  echo 'FROM openjdk:8-jre' > Dockerfile
+		  echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+		  echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+		  mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+		  pwd
+		  /kaniko/executor --context `pwd` --destination jddega/calculator:1.0.0
+		  '''
+		  }
+		}
+	      }
+           }
     container('gradle'){
         stage("Unit test") {
             echo "I am the ${env.BRANCH_NAME} branch"
