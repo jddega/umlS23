@@ -52,26 +52,41 @@ podTemplate(yaml: '''
 
     stage('Build Java Image') {
       container('kaniko') {
-        stage('Build a gradle project') {
-          sh '''
-          echo 'FROM openjdk:8-jre' > Dockerfile
-          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
-          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
-          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          pwd
-          ls -al
-          find . -name *.jar
-	  ls -al
-          /kaniko/executor --context `pwd` --destination jddega/hello-kaniko:0.1.0
-          '''
-        }
-      }
-    }
+		stage('Build a gradle project') {
+		  echo "I am the ${env.BRANCH_NAME} branch"
+		  if (env.BRANCH_NAME == 'feature'){
+		  sh '''
+		  echo 'FROM openjdk:8-jre' > Dockerfile
+		  echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+		  echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+		  mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+		  pwd
+		  /kaniko/executor --context `pwd` --destination jddega/calculator-feature:0.1.0
+		  '''
+		  }
+		}
+	      
+	    stage('Build a gradle project') {
+		  echo "I am the ${env.BRANCH_NAME} branch"
+		  if (env.BRANCH_NAME == 'main'){
+		  sh '''
+		  echo 'FROM openjdk:8-jre' > Dockerfile
+		  echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+		  echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+		  mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+		  pwd
+		  /kaniko/executor --context `pwd` --destination jddega/calculator-main:1.0.0
+		  '''
+		  }
+		}
+	      }
+           }
     container('gradle'){
         stage("Unit test") {
             echo "I am the ${env.BRANCH_NAME} branch"
-		if (env.BRANCH_NAME == 'feature'){
-               try {
+		if (env.BRANCH_NAME == 'feature' || 'main') 
+		    {
+                   try {
                     sh '''
                     pwd
                     cd Chapter08/sample1
@@ -84,10 +99,11 @@ podTemplate(yaml: '''
                 echo 'Failure detected'
                 }
 	      }
-	}
+	    }
         stage("Code coverage") {
             echo "I am the ${env.BRANCH_NAME} branch"
-		if (env.BRANCH_NAME != 'feature') {
+		if (env.BRANCH_NAME != 'feature') 
+		    {
                 try {
                   sh '''
                   pwd
@@ -101,10 +117,11 @@ podTemplate(yaml: '''
                   echo 'Failure detected'
                 }
 	     }
-	}
+	    }
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
-	   if (env.BRANCH_NAME == 'main') {
+	   if (env.BRANCH_NAME == 'feature' || 'main') 
+		{
            try {
             sh '''
             pwd
