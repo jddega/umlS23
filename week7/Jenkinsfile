@@ -136,6 +136,9 @@ podTemplate(yaml: '''
                         echo 'Failure detected'
                       }
 	         }
+		else {
+		   echo "I am the ${env.BRANCH_NAME} branch, I am jumping Unit test stage"
+		 }
 	    }
         stage("Code checkstyle") {
            echo "I am the ${env.BRANCH_NAME} branch"
