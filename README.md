@@ -1,5 +1,6 @@
 # umlS23
 developer ops sping23 course
+<<<<<<< HEAD
 testing 1
 =======
 # umlS23
@@ -43,3 +44,6 @@ feature again
 =======
 well done
 
+=======
+v27
+>>>>>>> upstream/main
