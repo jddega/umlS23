@@ -1,0 +1,9 @@
+alertmanager:
+  alertmanagerSpec:
+    alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: example
+
+prometheus-node-exporter:
+  hostRootFsMount:
+    enabled: false

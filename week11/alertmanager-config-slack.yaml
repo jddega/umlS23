@@ -29,7 +29,7 @@ spec:
     groupInterval: 60s
     groupWait: 60s
     receiver: slack-receiver
-    repeatInterval: 1m
+    repeatInterval: 2m
     receiver: slack-receiver
 ---
 apiVersion: v1
@@ -38,4 +38,4 @@ type: Opaque
 metadata:
   name: slack-secret
 data:
-  apiURL: aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDAxTENSTVBCREsvQjAzQUtRTkE0QlMvTUxsc0Vid3hqMXZLMkRGcmRMdUdJQjJ6Cg==
+  apiURL: aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDA1MVo2UUc4Uk0vQjA1MkRLMDRaUzcvVVNoTTFkUURaRUUwcDV3WnJGNkd4dEd4

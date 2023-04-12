@@ -3,20 +3,29 @@ kind: PrometheusRule
 metadata:
   labels:
     app: kube-prometheus-stack
-    release: kube-prometheus-stack-1648426699
-  name: example-rule
+    release: kube-prometheus-stack-1680416020
+  name: example
 spec:
   groups:
   - name: example-rule
     rules:
-    - alert: example-alert
+    - alert: Uptime-alert
       annotations:
-        description: Memory on node {{ $labels.instance }} currently at {{ $value }}% 
-          is under pressure
-        summary: Memory usage is under pressure, system may become unstable.
+        description: Uptime on node {{ $labels.instance }} is up for {{$value}}
+        summary: Think restartig the DB every 4 hours
       expr: |
-        100 - ((node_memory_MemAvailable_bytes{job="node-exporter"} * 100) / node_memory_MemTotal_bytes{job="node-exporter"}) > 40
+        ((mongodb_ss_uptimeEstimate{instance="10.1.5.36:9216"}) / 3600) > 4
       for: 2m
       labels:
         severity: warning
+
+    - alert: Open-Connections
+      annotations:
+        description: open connection for instance {{ $labels.instance}} as more than {{$value}} active connections
+          is over limit
+        summary: MongoDB on node {{$labels.instance}} has more than 2 connections
+      expr: (mongodb_ss_connections{conn_type="active"}) > 2
+      for: 2m
+      labels:
+        severity: critical
 
