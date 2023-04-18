@@ -4,7 +4,6 @@ import pymysql
 import csv
 
 def my_function():
-  print("hello")
   for key, value in os.environ.items():
     print(f"{key}: {value}")
 

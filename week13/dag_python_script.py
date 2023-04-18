@@ -24,10 +24,6 @@ dag = DAG(
     schedule_interval='@once'
 )
 
-def my_python_function():
-    # Define your Python script here
-    print('Hello, world!')
-
 run_script = KubernetesPodOperator(
     task_id='run_script',
     name='run-python-script',
