@@ -19,7 +19,7 @@ def my_function():
   try:
     conn = pymysql.connect(host=host,user=user,password=pw,db=db,port=port)
     m_query = """SELECT * FROM Orders;"""
-    local_filename = "/root/mount_file/test.csv"
+    local_filename = "/root/mount_file/Week13_JeanDega.csv"
 
     m_cursor = conn.cursor()
     m_cursor.execute(m_query)
@@ -36,5 +36,6 @@ def my_function():
     print(e)
     traceback.print_exc()
     sys.exit(1)
+
 
 
