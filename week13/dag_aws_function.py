@@ -33,7 +33,8 @@ task1 = KubernetesPodOperator(
     volume_mounts=[volume_mount],
     env_vars={
         'PYTHONPATH': '/root/mount_file',
-        'MYSQL_CONN': '{{ var.value.MYSQL_CONN }}'
+        'MYSQL_CONN': '{{ var.value.MYSQL_CONN }}',
+        'AWS_CONN': '{{ var.value.AWS_CONN }}'
     },
     image='dlambrig/week13:1.0',
     cmds=['python', '-c', 'from aws_function import my_function; my_function()'],
@@ -41,7 +42,7 @@ task1 = KubernetesPodOperator(
     dag=dag,
 )
 
-
+'''
 task2 = KubernetesPodOperator(
     task_id='my_script',
     name='upload_aws',
@@ -60,3 +61,4 @@ task2 = KubernetesPodOperator(
 
 # set the task dependencies
 task1 >> task2     
+'''
